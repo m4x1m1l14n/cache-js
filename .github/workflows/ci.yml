@@ -22,3 +22,5 @@ jobs:
       run: npm run build
     - name: Tests
       run: npm test
+    - name: Coverage
+      run: npx codecov --token="${{ secrets.CODECOV_TOKEN }}"
