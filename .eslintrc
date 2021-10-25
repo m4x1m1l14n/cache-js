@@ -1,0 +1,159 @@
+{
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"env": {
+		"commonjs": true,
+		"es6": true,
+		"node": true,
+		"jest": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2018
+	},
+	"rules": {
+		"@typescript-eslint/no-var-requires": 0,
+		"no-redeclare": "error",
+		"brace-style": [
+			2,
+			"allman",
+			{
+				"allowSingleLine": false
+			}
+		],
+		"indent": [
+			"error",
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"quotes": [
+			"error",
+			"single"
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"eol-last": [
+			"error",
+			"always"
+		],
+		"no-trailing-spaces": [
+			"error", {
+				"ignoreComments": true
+			}
+		],
+		"newline-before-return": "error",
+		"camelcase": "error",
+		"no-var": "error",
+		"prefer-const": "error",
+		"space-before-function-paren": [
+			"error", {
+				"anonymous": "always",
+				"named": "never",
+				"asyncArrow": "always"
+			}
+		],
+		"space-in-parens": [
+			"error", "always"
+		],
+		"space-before-blocks": "error",
+		"func-call-spacing": [ "error", "never" ],
+		"arrow-spacing": "error",
+		"for-direction": "error",
+		"getter-return": "error",
+		"no-await-in-loop": "error",
+		"no-console": "warn",
+		"no-constant-condition": "warn",
+		"no-loss-of-precision": "error",
+		"no-promise-executor-return": "error",
+		"no-template-curly-in-string": "error",
+		"no-unreachable": "warn",
+		"no-unreachable-loop": "error",
+		"class-methods-use-this": 0,
+		"consistent-return": "error",
+		"curly": "error",
+		"default-param-last": [ "error" ],
+		"dot-notation": "warn",
+		"eqeqeq": [ "error", "always" ],
+		"grouped-accessor-pairs": "error",
+		"no-caller": "error",
+		"no-alert": "error",
+		"no-constructor-return": "error",
+		"no-else-return": "error",
+		"no-empty-function": [ "error", { "allow": [ "constructors" ] } ],
+		"no-eq-null": "error",
+		"no-extend-native": "error",
+		"no-extra-bind": "error",
+		"no-loop-func": "error",
+		"no-multi-spaces": "error",
+		"no-return-assign": "error",
+		"no-return-await": "error",
+		"no-throw-literal": "error",
+		"no-unmodified-loop-condition": "error",
+		"no-useless-concat": "error",
+		"no-useless-escape": "error",
+		"no-warning-comments": "warn",
+		"prefer-promise-reject-errors": "error",
+		"require-await": "error",
+		"yoda": "error",
+		"no-use-before-define": "error",
+		"block-spacing": "error",
+		"comma-spacing": [
+			"error", {
+				"before": false,
+				"after": true
+			}
+		],
+		"comma-style": [ "error", "last" ],
+		"key-spacing": [ "error", { "afterColon": true } ],
+		"linebreak-style": [ "error", "unix" ],
+		"lines-between-class-members": [ "error", "always", { "exceptAfterSingleLine": true } ],
+		"new-cap": [ "error", { "newIsCap": true } ],
+		"no-lonely-if": "error",
+		"no-multi-assign": "error",
+		"no-multiple-empty-lines": [ "error", {
+			"max": 3,
+			"maxEOF": 0
+		} ],
+		"no-negated-condition": "error",
+		"no-unneeded-ternary": "error",
+		"no-whitespace-before-property": "error",
+		"object-property-newline": "error",
+		"one-var": [ "error", "never" ],
+		"one-var-declaration-per-line": [ "error", "always" ],
+		"operator-linebreak": [ "error", "before", { "overrides": { "=": "after" } } ],
+		"prefer-object-spread": "error",
+		"semi-spacing": "error",
+		"semi-style": [ "error", "last" ],
+		"space-unary-ops": "error",
+		"arrow-parens": [ "error", "always" ],
+		"constructor-super": "error",
+		"no-class-assign": "error",
+		"no-confusing-arrow": "error",
+		"prefer-arrow-callback": [ "warn", { "allowNamedFunctions": true } ],
+		"prefer-rest-params": "warn",
+		"prefer-spread": "error",
+		"prefer-template": "warn",
+		"rest-spread-spacing": [ "error", "never" ],
+		"template-curly-spacing": "error",
+		"max-len": [
+			"error",
+			{
+				"code": 120,
+				"ignoreComments": true
+			}
+		],
+		"array-bracket-spacing": [ "error", "always" ],
+		"max-depth": [ "warn", 4 ]
+	}
+}
