@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+		"target": "ES2015",
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"strict": true,
+		"lib": [
+			"ES2021"
+		],
+		"sourceMap": true
+	},
+	"include": [
+		"src/**/*.ts"
+	]
+}
