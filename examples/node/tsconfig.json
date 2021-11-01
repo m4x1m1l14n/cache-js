@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		//"rootDir": ".",
 		"outDir": "dist",
 		"declarationDir": "dist",
 		"target": "ES2015",
@@ -10,10 +9,8 @@
 		"declaration": true,
 		"strict": true,
 		"lib": [
-			"ES2021",
-			"DOM"
-		],
-		"sourceMap": true
+			"ES2021"
+		]
 	},
 	"include": [
 		"src/**/*.ts"

@@ -15,9 +15,15 @@ describe( 'Cache', () =>
 	{
 		const cache = new Cache<number, string>();
 		const value = 'Some string to store in cache';
+		const value2 = 'Some string to replace previous string';
+
 		cache.set( 1, value );
 
 		expect( cache.get( 1 ) ).toBe( value );
+
+		cache.set( 1, value2 );
+
+		expect( cache.get( 1 ) ).toBe( value2 );
 	} );
 
 
@@ -64,9 +70,10 @@ describe( 'Cache', () =>
 	test( 'set / delete / delete', () =>
 	{
 		const cache = new Cache<number, string>();
-		cache.set( 1, 'Some string to store in cache' );
-		cache.delete( 1 );
 
+		cache.set( 1, 'Some string to store in cache' );
+
+		expect( cache.delete( 1 ) ).toBe( true );
 		expect( cache.delete( 1 ) ).toBe( false );
 	} );
 
@@ -125,6 +132,41 @@ describe( 'Cache', () =>
 		await delay( 1000 );
 		expect( cache.get( 1 ) ).toBe( undefined );
 	}, 3000 );
+
+
+	test( 'take', () =>
+	{
+		const cache = new Cache<number, string>();
+		cache.set( 1, 'Take me!' );
+
+		expect( cache.take( 1 ) ).toBe( 'Take me!' );
+		expect( cache.take( 1 ) ).toBe( undefined );
+		expect( cache.get( 1 ) ).toBe( undefined );
+	}, 3000 );
+
+	test( 'size', () =>
+	{
+		const cache = new Cache<number, string>();
+
+		expect( cache.size === 0 );
+
+		cache.set( 1, 'Yeaaaah' );
+
+		expect( cache.size === 1 );
+
+		cache.set( 1, 'Wooohooo' );
+
+		expect( cache.size === 1 );
+
+		cache.set( 2, 'Waaaaaa' );
+		cache.set( 3, 'Muheheeee' );
+
+		expect( cache.size === 3 );
+
+		cache.delete( 2 );
+
+		expect( cache.size === 2 );
+	} );
 
 	// TODO: maxItems test
 } );

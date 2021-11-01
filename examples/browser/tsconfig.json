@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		//"rootDir": ".",
+		"baseUrl": ".",
 		"outDir": "dist",
 		"declarationDir": "dist",
 		"target": "ES2015",

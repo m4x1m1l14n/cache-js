@@ -5,6 +5,8 @@ import { CacheValue } from '../models/CacheValue';
 
 import { ExpirationCallback } from '../types';
 
+import isNode from 'detect-node';
+
 export class Cache<K, T>
 {
 	private options: Required<CacheOptions>;
@@ -23,8 +25,16 @@ export class Cache<K, T>
 			...( options ?? {} )
 		};
 
-		const interval = setInterval( () => this.cleanup(), this.options.resolution );
-		interval.unref();
+		if ( isNode )
+		{
+			const interval = setInterval( () => this.cleanup(), this.options.resolution );
+
+			interval.unref();
+		}
+		else
+		{
+			window.setInterval( () => this.cleanup(), this.options.resolution );
+		}
 	}
 
 	public set( key : K, value : T, ttl? : number, callback?: ExpirationCallback<T> ) : Cache<K, T>
@@ -64,6 +74,25 @@ export class Cache<K, T>
 		}
 
 		return wrapped?.value;
+	}
+
+	/**
+	 * Takes value by its key from cache.
+	 * 
+	 * Value is returned and key is removed from cache.
+	 * 
+	 * @param key Key to take
+	 * @returns Value of specified key
+	 */
+	public take( key: K ): T | undefined
+	{
+		const value = this.get( key );
+		if ( value !== undefined )
+		{
+			this.delete( key );
+		}
+
+		return value;
 	}
 
 	public has( key : K ) : boolean
