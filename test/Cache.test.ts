@@ -126,5 +126,16 @@ describe( 'Cache', () =>
 		expect( cache.get( 1 ) ).toBe( undefined );
 	}, 3000 );
 
+
+	test( 'take', () =>
+	{
+		const cache = new Cache<number, string>();
+		cache.set( 1, 'Take me!' );
+
+		expect( cache.take( 1 ) ).toBe( 'Take me!' );
+		expect( cache.take( 1 ) ).toBe( undefined );
+		expect( cache.get( 1 ) ).toBe( undefined );
+	}, 3000 );
+
 	// TODO: maxItems test
 } );

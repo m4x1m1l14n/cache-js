@@ -76,6 +76,25 @@ export class Cache<K, T>
 		return wrapped?.value;
 	}
 
+	/**
+	 * Takes value by its key from cache.
+	 * 
+	 * Value is returned and key is removed from cache.
+	 * 
+	 * @param key Key to take
+	 * @returns Value of specified key
+	 */
+	public take( key: K ): T | undefined
+	{
+		const value = this.get( key );
+		if ( value !== undefined )
+		{
+			this.delete( key );
+		}
+
+		return value;
+	}
+
 	public has( key : K ) : boolean
 	{
 		return this.cache.has( key );
