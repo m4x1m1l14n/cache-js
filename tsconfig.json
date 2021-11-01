@@ -1,9 +1,13 @@
 {
 	"compilerOptions": {
+		//"rootDir": ".",
 		"outDir": "dist",
+		"declarationDir": "dist",
 		"target": "ES2015",
+		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"esModuleInterop": true,
+		"declaration": true,
 		"strict": true,
 		"lib": [
 			"ES2021"
