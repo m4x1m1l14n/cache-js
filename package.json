@@ -1,7 +1,7 @@
 {
 	"name": "@m4x1m1l14n/cache",
 	"version": "1.0.0-alpha.1",
-	"description": "TTL cache for browser & node",
+	"description": "Isomorphic cache implementation with TTL for browser & Node JS written in TypeScript",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
 	"files": [
@@ -13,8 +13,15 @@
 		"lint": "eslint . --ext .ts",
 		"lint-fix": "npm run lint -- --fix"
 	},
-	"keywords": [],
-	"author": "",
+	"keywords": [
+		"nodejs",
+		"typescript",
+		"browser",
+		"cache",
+		"memcache",
+		"ttl"
+	],
+	"author": "m4x1m1l14n",
 	"license": "ISC",
 	"repository": {
 		"type": "git",
