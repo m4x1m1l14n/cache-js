@@ -10,7 +10,8 @@
 		"declaration": true,
 		"strict": true,
 		"lib": [
-			"ES2021"
+			"ES2021",
+			"DOM"
 		],
 		"sourceMap": true
 	},
