@@ -1,7 +1,7 @@
 {
 	"name": "@m4x1m1l14n/cache",
-	"version": "1.0.0",
-	"description": "Isomorphic cache implementation with TTL for browser & Node JS written in TypeScript",
+	"version": "1.0.1",
+	"description": "Lightweight in-memory isomorphic cache implementation with TTL for browser & Node JS written in TypeScript",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
 	"files": [
@@ -34,9 +34,9 @@
 	"devDependencies": {
 		"@types/detect-node": "^2.0.0",
 		"@types/jest": "^27.0.2",
-		"@types/node": "^16.11.4",
-		"@typescript-eslint/eslint-plugin": "^5.2.0",
-		"@typescript-eslint/parser": "^5.2.0",
+		"@types/node": "^16.11.6",
+		"@typescript-eslint/eslint-plugin": "^5.3.0",
+		"@typescript-eslint/parser": "^5.3.0",
 		"eslint": "^8.1.0",
 		"jest": "^27.3.1",
 		"ts-jest": "^27.0.7",
