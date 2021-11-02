@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
-import { Cache } from '@m4x1m1l14n/cache';
+import { Cache, CacheOptions } from '@m4x1m1l14n/cache';
 
-const cache = new Cache<number, string>();
+const options: CacheOptions =
+{
+	resolution: 1000,
+	defaultTTL: Number.POSITIVE_INFINITY,
+	maxItems: 1000
+};
+
+const cache = new Cache<number, string>( options );
 
 document.addEventListener( 'DOMContentLoaded', ( event ) =>
 {
