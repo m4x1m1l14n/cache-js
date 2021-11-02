@@ -22,7 +22,7 @@
 		"ttl"
 	],
 	"author": "m4x1m1l14n",
-	"license": "ISC",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/m4x1m1l14n/cache-js.git"
