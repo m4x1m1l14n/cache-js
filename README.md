@@ -1,4 +1,4 @@
-# @m4x1m1l14n/cache-js
+# @m4x1m1l14n/cache
 
 [![npm (scoped)](https://img.shields.io/npm/v/@m4x1m1l14n/cache)](https://www.npmjs.com/package/@m4x1m1l14n/cache)
 [![ci](https://github.com/m4x1m1l14n/cache-js/actions/workflows/ci.yml/badge.svg?branch=devel)](https://github.com/m4x1m1l14n/cache-js/actions/workflows/ci.yml)
@@ -13,7 +13,7 @@ Each entry in cache can has its own TTL (timeout) and assigned expiration callba
 ## Table of Contents
 * [Installation](#installation)
 * [Documentation](#documentation)
-  * [Instantiation](#Instantiation)
+  * [Instantiation](#instantiation)
   * [set](#set)
   * [get](#get)
   * [take](#take)
@@ -23,7 +23,7 @@ Each entry in cache can has its own TTL (timeout) and assigned expiration callba
 ## Installation
 
 ```bash
-npm i @m4x1m1l14n/cache-js
+npm i @m4x1m1l14n/cache
 ```
 
 ## Documentation
