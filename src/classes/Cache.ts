@@ -105,6 +105,16 @@ export class Cache<K, T>
 		return this.cache.delete( key );
 	}
 
+	public mdelete( keys: K[] ): Cache<K, T>
+	{
+		for ( const key of keys )
+		{
+			this.delete( key );
+		}
+
+		return this;
+	}
+
 	public get size() : number
 	{
 		return this.cache.size;
