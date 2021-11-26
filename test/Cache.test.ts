@@ -168,5 +168,32 @@ describe( 'Cache', () =>
 		expect( cache.size === 2 );
 	} );
 
+	test( 'mdelete', () =>
+	{
+		const cache = new Cache<number, string>();
+
+		cache.set( 1, 'Lorem' );
+		cache.set( 2, 'ipsum' );
+		cache.set( 3, 'dolor' );
+		cache.set( 4, 'sit' );
+		cache.set( 5, 'amet!' );
+
+		cache.mdelete( [ 2, 3 ] );
+
+		expect( cache.has( 1 ) ).toBeTruthy();
+		expect( cache.has( 2 ) ).toBeFalsy();
+		expect( cache.has( 3 ) ).toBeFalsy();
+		expect( cache.has( 4 ) ).toBeTruthy();
+		expect( cache.has( 5 ) ).toBeTruthy();
+
+		expect( cache.size ).toBe( 3 );
+
+		expect( cache.get( 1 ) ).toBe( 'Lorem' );
+		expect( cache.get( 2 ) ).toBe( undefined );
+		expect( cache.get( 3 ) ).toBe( undefined );
+		expect( cache.get( 4 ) ).toBe( 'sit' );
+		expect( cache.get( 5 ) ).toBe( 'amet!' );
+	} );
+
 	// TODO: maxItems test
 } );

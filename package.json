@@ -9,7 +9,7 @@
 	],
 	"scripts": {
 		"test": "jest",
-		"build": "rm -rf dist && tsc",
+		"build": "rm -rf dist && tsc -p tsconfig.src.json",
 		"lint": "eslint . --ext .ts",
 		"lint-fix": "npm run lint -- --fix"
 	},
