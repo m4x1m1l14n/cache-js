@@ -9,7 +9,7 @@
 	],
 	"scripts": {
 		"test": "jest",
-		"build": "rm -rf dist && tsc",
+		"build": "rm -rf dist && tsc -p tsconfig.src.json",
 		"lint": "eslint . --ext .ts",
 		"lint-fix": "npm run lint -- --fix"
 	},
@@ -22,7 +22,7 @@
 		"ttl"
 	],
 	"author": "m4x1m1l14n",
-	"license": "ISC",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/m4x1m1l14n/cache-js.git"
