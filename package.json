@@ -1,6 +1,6 @@
 {
 	"name": "@m4x1m1l14n/cache",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "Lightweight in-memory isomorphic cache implementation with TTL for browser & Node JS written in TypeScript",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
