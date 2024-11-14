@@ -1,6 +1,5 @@
 {
-	"compilerOptions":
-	{
+	"compilerOptions": {
 		"outDir": "dist",
 		"declarationDir": "dist",
 		"target": "ES2015",
@@ -9,10 +8,7 @@
 		"esModuleInterop": true,
 		"declaration": true,
 		"strict": true,
-		"lib": [
-			"ES2021",
-			"DOM"
-		],
+		"lib": ["ES2021", "DOM"],
 		"sourceMap": true
 	}
 }
