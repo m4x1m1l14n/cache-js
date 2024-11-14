@@ -2,13 +2,13 @@
 	"compilerOptions": {
 		"outDir": "dist",
 		"declarationDir": "dist",
-		"target": "ES2015",
+		"target": "ES2022",
 		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"esModuleInterop": true,
 		"declaration": true,
 		"strict": true,
-		"lib": ["ES2021", "DOM"],
+		"lib": ["ES2022", "DOM"],
 		"sourceMap": true
 	}
 }
