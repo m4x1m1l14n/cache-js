@@ -128,7 +128,7 @@ export class Cache<K, T> {
 
 	public flush(invokeCallback: boolean = false) {
 		if (invokeCallback) {
-			for (const [key, value] of this.cache) {
+			for (const [, value] of this.cache) {
 				if (value.callback) {
 					value.callback(value.value);
 				}
