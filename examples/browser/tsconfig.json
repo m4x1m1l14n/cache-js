@@ -9,13 +9,8 @@
 		"esModuleInterop": true,
 		"declaration": true,
 		"strict": true,
-		"lib": [
-			"ES2021",
-			"DOM"
-		],
+		"lib": ["ES2021", "DOM"],
 		"sourceMap": true
 	},
-	"include": [
-		"src/**/*.ts"
-	]
+	"include": ["src/**/*.ts"]
 }

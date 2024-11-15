@@ -10,24 +10,22 @@ module.exports = {
 			{
 				test: /\.tsx?$/,
 				use: {
-					loader: "ts-loader",
+					loader: 'ts-loader',
 					options: {
 						transpileOnly: false,
-						projectReferences: false
-					}
+						projectReferences: false,
+					},
 				},
-				exclude: /node_modules/
-			}
-		]
+				exclude: /node_modules/,
+			},
+		],
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js'],
-		plugins: [
-			new TsconfigPathsPlugin({})
-		]
+		plugins: [new TsconfigPathsPlugin({})],
 	},
 	output: {
 		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
-	}
+	},
 };

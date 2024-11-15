@@ -1,1 +1,1 @@
-export type ExpirationCallback<T> = ( value: T ) => void;
+export type ExpirationCallback<T> = (value: T) => void;

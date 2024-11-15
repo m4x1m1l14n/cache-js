@@ -8,11 +8,7 @@
 		"esModuleInterop": true,
 		"declaration": true,
 		"strict": true,
-		"lib": [
-			"ES2021"
-		]
+		"lib": ["ES2021"]
 	},
-	"include": [
-		"src/**/*.ts"
-	]
+	"include": ["src/**/*.ts"]
 }
