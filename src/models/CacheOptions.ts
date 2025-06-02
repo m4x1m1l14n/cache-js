@@ -4,8 +4,10 @@ export interface CacheOptions {
 	 */
 	maxItems?: number;
 	/**
-	 * Time in milliseconds in which timer will check for
-	 * outdated items
+	 * @deprecated This option is deprecated. The cache now uses dynamic timeout scheduling
+	 * for accurate expiration timing instead of periodic cleanup intervals.
+	 * Items are now expired at their exact TTL expiration time rather than being
+	 * checked periodically. This option is kept for backward compatibility but has no effect.
 	 */
 	resolution?: number;
 	/**

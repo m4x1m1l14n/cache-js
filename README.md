@@ -44,9 +44,11 @@ Cache behavior can be altered with `options` object passed to its constructor. F
 
 | Option     | Default value | Description                                                         |
 | ---------- | ------------- | ------------------------------------------------------------------- |
-| resolution | 1000          | Interval in milliseconds after which entries are checked for expiry |
+| ~~resolution~~ | ~~1000~~ | **Deprecated.** Previously set interval for checking expiry. Now items expire at exact TTL times using dynamic timeout scheduling for improved accuracy. |
 | defaultTTL | Infinity      | Default TTL for all added entries                                   |
 | maxItems   | 1000          | Maximum number of entries stored in cache                           |
+
+**Expiration Accuracy**: Cache entries now expire at their exact TTL expiration time rather than being checked periodically. This provides better accuracy and performance by scheduling cleanup events precisely when items expire, instead of checking all items at fixed intervals.
 
 Example:
 
@@ -54,7 +56,6 @@ Example:
 import { Cache, CacheOptions } from '@m4x1m1l14n/cache';
 
 const options: CacheOptions = {
-	resolution: 1000,
 	defaultTTL: Number.POSITIVE_INFINITY,
 	maxItems: 1000,
 };

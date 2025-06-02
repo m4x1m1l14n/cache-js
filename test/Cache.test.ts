@@ -195,4 +195,75 @@ describe('Cache', () => {
 	});
 
 	// TODO: maxItems test
+
+	test('dynamic expiration - accurate timing without resolution delay', async () => {
+		const cache = new Cache<number, string>();
+		const callback = jest.fn();
+
+		// Set an item with very short TTL
+		cache.set(1, 'test-value', 50, callback);
+
+		// Item should be available immediately
+		expect(cache.get(1)).toBe('test-value');
+
+		// Wait for expiration (add small buffer for timing)
+		await delay(60);
+
+		// Item should be expired and callback should have been called
+		expect(cache.get(1)).toBe(undefined);
+		expect(callback).toHaveBeenCalledWith('test-value');
+	}, 1000);
+
+	test('dynamic expiration - multiple items with different TTLs', async () => {
+		const cache = new Cache<number, string>();
+		const callback1 = jest.fn();
+		const callback2 = jest.fn();
+		const callback3 = jest.fn();
+
+		// Set items with different expiration times
+		cache.set(1, 'expires-first', 30, callback1);
+		cache.set(2, 'expires-second', 60, callback2);
+		cache.set(3, 'expires-third', 90, callback3);
+
+		// All items should be available initially
+		expect(cache.get(1)).toBe('expires-first');
+		expect(cache.get(2)).toBe('expires-second');
+		expect(cache.get(3)).toBe('expires-third');
+
+		// Wait for first item to expire
+		await delay(40);
+		expect(cache.get(1)).toBe(undefined);
+		expect(cache.get(2)).toBe('expires-second');
+		expect(cache.get(3)).toBe('expires-third');
+		expect(callback1).toHaveBeenCalledWith('expires-first');
+
+		// Wait for second item to expire
+		await delay(30);
+		expect(cache.get(1)).toBe(undefined);
+		expect(cache.get(2)).toBe(undefined);
+		expect(cache.get(3)).toBe('expires-third');
+		expect(callback2).toHaveBeenCalledWith('expires-second');
+
+		// Wait for third item to expire
+		await delay(30);
+		expect(cache.get(1)).toBe(undefined);
+		expect(cache.get(2)).toBe(undefined);
+		expect(cache.get(3)).toBe(undefined);
+		expect(callback3).toHaveBeenCalledWith('expires-third');
+	}, 2000);
+
+	test('dynamic expiration - no timeout when all items have infinite TTL', () => {
+		const cache = new Cache<number, string>();
+
+		// Add items with infinite TTL
+		cache.set(1, 'value1');
+		cache.set(2, 'value2');
+
+		// Verify items are still accessible
+		expect(cache.get(1)).toBe('value1');
+		expect(cache.get(2)).toBe('value2');
+
+		// Should not have any scheduled timeout
+		expect((cache as any).timeoutHandle).toBe(null);
+	});
 });
