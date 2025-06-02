@@ -2,7 +2,6 @@
 import { Cache, CacheOptions } from '@m4x1m1l14n/cache';
 
 const options: CacheOptions = {
-	resolution: 1000,
 	defaultTTL: Number.POSITIVE_INFINITY,
 	maxItems: 1000,
 };
