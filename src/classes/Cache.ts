@@ -14,6 +14,7 @@ export class Cache<K, T> {
 	private cache = new Map<K, CacheValue<T>>();
 	private timeoutHandle: NodeJS.Timeout | number | null = null;
 	private expirationHeap = new MinHeap<K>();
+	private destroyed = false;
 
 	constructor(options?: CacheOptions) {
 		this.options = {
@@ -32,6 +33,10 @@ export class Cache<K, T> {
 	}
 
 	public set(key: K, value: T, ttl?: number, callback?: ExpirationCallback<T>): Cache<K, T> {
+		if (this.destroyed) {
+			throw new Error('Cache instance has been destroyed');
+		}
+
 		const now = getMilliseconds();
 		const itemTTL = ttl ?? this.options.defaultTTL;
 
@@ -51,7 +56,7 @@ export class Cache<K, T> {
 		if (itemTTL !== Number.POSITIVE_INFINITY) {
 			this.expirationHeap.insert({
 				expiration: now + itemTTL,
-				key
+				key,
 			});
 		}
 
@@ -68,6 +73,10 @@ export class Cache<K, T> {
 	 * @param refresh True to refresh item TTL or false to not
 	 */
 	public get(key: K, refresh = false): T | undefined {
+		if (this.destroyed) {
+			throw new Error('Cache instance has been destroyed');
+		}
+
 		const wrapped = this.cache.get(key);
 		if (!wrapped) {
 			return undefined;
@@ -80,11 +89,11 @@ export class Cache<K, T> {
 			// Item is expired, remove it
 			this.cache.delete(key);
 			this.expirationHeap.removeByKey(key);
-			
+
 			if (wrapped.callback) {
 				wrapped.callback(wrapped.value);
 			}
-			
+
 			return undefined;
 		}
 
@@ -93,15 +102,15 @@ export class Cache<K, T> {
 			this.expirationHeap.removeByKey(key);
 
 			wrapped.created = now;
-			
+
 			// Add new expiration entry if item has finite TTL
 			if (wrapped.ttl !== Number.POSITIVE_INFINITY) {
 				this.expirationHeap.insert({
 					expiration: now + wrapped.ttl,
-					key
+					key,
 				});
 			}
-			
+
 			// Reschedule cleanup since we refreshed an item's TTL
 			this.scheduleCleanup();
 		}
@@ -127,6 +136,10 @@ export class Cache<K, T> {
 	}
 
 	public has(key: K): boolean {
+		if (this.destroyed) {
+			throw new Error('Cache instance has been destroyed');
+		}
+
 		const wrapped = this.cache.get(key);
 		if (!wrapped) {
 			return false;
@@ -138,11 +151,11 @@ export class Cache<K, T> {
 			// Item is expired, remove it
 			this.cache.delete(key);
 			this.expirationHeap.removeByKey(key);
-			
+
 			if (wrapped.callback) {
 				wrapped.callback(wrapped.value);
 			}
-			
+
 			return false;
 		}
 
@@ -150,18 +163,26 @@ export class Cache<K, T> {
 	}
 
 	public delete(key: K): boolean {
+		if (this.destroyed) {
+			throw new Error('Cache instance has been destroyed');
+		}
+
 		const result = this.cache.delete(key);
-		
+
 		// Remove from expiration heap and reschedule cleanup since we removed an item
 		if (result) {
 			this.expirationHeap.removeByKey(key);
 			this.scheduleCleanup();
 		}
-		
+
 		return result;
 	}
 
 	public mdelete(keys: K[]): Cache<K, T> {
+		if (this.destroyed) {
+			throw new Error('Cache instance has been destroyed');
+		}
+
 		let deletedAny = false;
 		for (const key of keys) {
 			if (this.cache.delete(key)) {
@@ -179,10 +200,18 @@ export class Cache<K, T> {
 	}
 
 	public get size(): number {
+		if (this.destroyed) {
+			throw new Error('Cache instance has been destroyed');
+		}
+
 		return this.cache.size;
 	}
 
 	public forEach(cb: (value: T, key: K) => void): void {
+		if (this.destroyed) {
+			throw new Error('Cache instance has been destroyed');
+		}
+
 		this.cache.forEach((value, key) => {
 			cb(value.value, key);
 		});
@@ -231,13 +260,13 @@ export class Cache<K, T> {
 		while (!this.expirationHeap.isEmpty) {
 			const peek = this.expirationHeap.peek()!;
 			const cached = this.cache.get(peek.key);
-			
+
 			// If the item doesn't exist in cache or the expiration doesn't match, remove from heap
 			if (!cached || cached.created + cached.ttl !== peek.expiration) {
 				this.expirationHeap.extractMin();
 				continue;
 			}
-			
+
 			// Found a valid entry
 			return peek.expiration;
 		}
@@ -283,6 +312,15 @@ export class Cache<K, T> {
 		}
 	}
 
+	public destroy(invokeCallbacks: boolean = false): void {
+		if (this.destroyed) {
+			return;
+		}
+
+		this.destroyed = true;
+		this.flush(invokeCallbacks);
+	}
+
 	public flush(invokeCallback: boolean = false) {
 		if (invokeCallback) {
 			for (const [, value] of this.cache) {
@@ -294,7 +332,7 @@ export class Cache<K, T> {
 
 		this.cache.clear();
 		this.expirationHeap.clear();
-		
+
 		// Clear any scheduled cleanup since cache is empty
 		this.clearScheduledCleanup();
 	}

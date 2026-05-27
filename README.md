@@ -21,6 +21,7 @@ Each entry in cache can has its own TTL (timeout) and assigned expiration callba
     -   [has](#has)
     -   [delete](#delete)
     -   [flush](#flush)
+    -   [destroy](#destroy)
 
 ## Installation
 
@@ -42,11 +43,11 @@ const cache = new Cache<number, string>();
 
 Cache behavior can be altered with `options` object passed to its constructor. Following table shows options that can be changed.
 
-| Option     | Default value | Description                                                         |
-| ---------- | ------------- | ------------------------------------------------------------------- |
-| ~~resolution~~ | ~~1000~~ | **Deprecated.** Previously set interval for checking expiry. Now items expire at exact TTL times using dynamic timeout scheduling for improved accuracy. |
-| defaultTTL | Infinity      | Default TTL for all added entries                                   |
-| maxItems   | 1000          | Maximum number of entries stored in cache                           |
+| Option         | Default value | Description                                                                                                                                              |
+| -------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ~~resolution~~ | ~~1000~~      | **Deprecated.** Previously set interval for checking expiry. Now items expire at exact TTL times using dynamic timeout scheduling for improved accuracy. |
+| defaultTTL     | Infinity      | Default TTL for all added entries                                                                                                                        |
+| maxItems       | 1000          | Maximum number of entries stored in cache                                                                                                                |
 
 **Expiration Accuracy**: Cache entries now expire at their exact TTL expiration time rather than being checked periodically. This provides better accuracy and performance by scheduling cleanup events precisely when items expire, instead of checking all items at fixed intervals.
 
@@ -286,4 +287,64 @@ cache.flush(true);
 
 // Flush cache without invoking callbacks
 cache.flush();
+```
+
+### destroy
+
+Destroys the cache instance, clearing all entries and stopping the internal cleanup timer. Use this in test teardown (`afterEach`) or when a cache instance is no longer needed to prevent resource leaks.
+
+Prototype:
+
+```ts
+public destroy(invokeCallbacks: boolean = false) : void
+```
+
+Params:
+
+-   `invokeCallbacks (default: false)`: If set to `true`, any expiration callback assigned to an entry will be called before the entry is deleted.
+
+After `destroy()` is called, all methods throw an error (`Cache instance has been destroyed`) except:
+
+-   `destroy()` itself — idempotent, safe to call multiple times
+-   `flush()` — safe to call (no-op on empty cache)
+
+Return value:
+
+`destroy` does not return a value.
+
+Example:
+
+```ts
+import { Cache } from '@m4x1m1l14n/cache';
+
+const cache = new Cache<number, string>();
+
+cache.set(1, 'Hello');
+cache.set(2, 'World');
+
+// Destroy and invoke callbacks
+cache.destroy(true);
+
+// Or destroy without invoking callbacks
+const cache2 = new Cache<number, string>();
+cache2.set(1, 'Hello');
+cache2.destroy();
+```
+
+**Jest / testing example:**
+
+```ts
+describe('MyService', () => {
+	let cache: Cache<string, string>;
+
+	beforeEach(() => {
+		cache = new Cache();
+	});
+
+	afterEach(() => {
+		cache.destroy();
+	});
+
+	// ... tests ...
+});
 ```
